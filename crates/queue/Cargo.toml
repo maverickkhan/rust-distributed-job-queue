@@ -1,0 +1,22 @@
+[package]
+name = "djq-queue"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "High-level queue service: submission, operator actions, metrics and maintenance"
+
+[dependencies]
+djq-core = { path = "../core" }
+djq-telemetry = { path = "../telemetry" }
+tokio.workspace = true
+tokio-util.workspace = true
+async-trait.workspace = true
+chrono.workspace = true
+uuid.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tracing.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true }
