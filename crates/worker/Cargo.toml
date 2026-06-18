@@ -1,0 +1,35 @@
+[package]
+name = "djq-worker"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Distributed worker runtime that leases and executes jobs"
+default-run = "djq-worker"
+
+[lib]
+name = "djq_worker"
+path = "src/lib.rs"
+
+[[bin]]
+name = "djq-worker"
+path = "src/main.rs"
+
+[dependencies]
+djq-core = { path = "../core" }
+djq-queue = { path = "../queue" }
+djq-storage = { path = "../storage" }
+djq-telemetry = { path = "../telemetry" }
+axum.workspace = true
+tokio.workspace = true
+tokio-util.workspace = true
+async-trait.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+tracing.workspace = true
+anyhow.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true }
