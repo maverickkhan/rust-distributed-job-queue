@@ -1,0 +1,23 @@
+[package]
+name = "djq-integration-tests"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Integration tests exercising the queue against a real Postgres"
+publish = false
+
+[dependencies]
+djq-core = { path = "../core" }
+djq-storage = { path = "../storage" }
+djq-queue = { path = "../queue" }
+djq-worker = { path = "../worker" }
+djq-telemetry = { path = "../telemetry" }
+tokio.workspace = true
+tokio-util.workspace = true
+uuid.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true }
