@@ -1,0 +1,22 @@
+# Rust build artifacts
+/target
+**/*.rs.bk
+*.pdb
+
+# Environment / secrets — never commit real values
+.env
+.env.*.local
+*.local
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Coverage / profiling
+*.profraw
+tarpaulin-report.html
+
+# Docker volumes (defensive; named volumes live in the Docker engine)
+/data
+/pgdata
