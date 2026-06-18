@@ -1,0 +1,38 @@
+[package]
+name = "djq-api"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Axum REST + SSE API for the distributed job queue"
+default-run = "djq-api"
+
+[lib]
+name = "djq_api"
+path = "src/lib.rs"
+
+[[bin]]
+name = "djq-api"
+path = "src/main.rs"
+
+[dependencies]
+djq-core = { path = "../core" }
+djq-queue = { path = "../queue" }
+djq-storage = { path = "../storage" }
+djq-telemetry = { path = "../telemetry" }
+axum.workspace = true
+tower.workspace = true
+tower-http.workspace = true
+tokio.workspace = true
+tokio-util.workspace = true
+futures.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+tracing.workspace = true
+anyhow.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true }
+reqwest.workspace = true
