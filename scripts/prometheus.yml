@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: djq-api
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["api:8080"]
+
+  - job_name: djq-worker
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["worker:9091"]

@@ -1,0 +1,68 @@
+# Full local stack: Postgres + API + a pool of workers + Prometheus.
+# Usage: docker compose up --build
+name: djq
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: djq
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: .
+    command: ["djq-api"]
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/djq
+      API_BIND_ADDR: 0.0.0.0:8080
+      RUST_LOG: info,sqlx=warn
+      LOG_JSON: "true"
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  worker:
+    build: .
+    command: ["djq-worker"]
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/djq
+      WORKER_QUEUES: default,emails
+      WORKER_CONCURRENCY: "8"
+      WORKER_METRICS_ADDR: 0.0.0.0:9091
+      RUST_LOG: info,sqlx=warn
+      LOG_JSON: "true"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    deploy:
+      replicas: 2
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./scripts/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    depends_on:
+      - api
+      - worker
+
+volumes:
+  pgdata:
