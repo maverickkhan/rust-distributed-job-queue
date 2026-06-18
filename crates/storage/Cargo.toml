@@ -1,0 +1,20 @@
+[package]
+name = "djq-storage"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "PostgreSQL implementation of the job-queue Store trait (sqlx)"
+
+[dependencies]
+djq-core = { path = "../core" }
+sqlx.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+async-trait.workspace = true
+tracing.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true }
